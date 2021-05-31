@@ -1,0 +1,16 @@
+﻿ [
+    {
+      "routeid": "1",
+      "Station": [ "Delhi", "Chennai", "Jhansi", "Bhopal", "Nagpur" ]
+
+    },
+  {
+    "routeid": "2",
+    "Station": [ "Delhi", "Chennai", "Ghaziabad", "Bangalore" ]
+  },
+    {
+     "routeid": "3",
+      "Station": [ "Delhi", "Chennai", "Amritsar", "Hyderbad" ]
+    }
+    
+  ]

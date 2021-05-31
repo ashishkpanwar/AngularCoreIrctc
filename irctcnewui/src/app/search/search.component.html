@@ -1,0 +1,73 @@
+<div [hidden]="found">
+  <form  [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+    <div class="form-group">
+      <div>
+        <label for="keyword">From Station</label>
+        <input formControlName="fromstation" type="text" class="form-control" autocomplete="off"
+               id="keyword" placeholder="From Station..." autofocus />
+        <div *ngIf="fromsearched.length==0 && show" class="text-danger">Station Not Found</div>
+        </div>
+      </div>
+      <div *ngIf="show">
+        <ul>
+          <li *ngFor="let result of fromsearched" (click)="onSelect(result)" id="fromlist">
+            <p class="artist-name">
+              {{result.stationName}}
+            </p>
+            <!--<span class="tags" *ngFor='let genre of result?.genres | slice:0:6'>{{genre}}</span>-->
+        </ul>
+      </div>
+      <div class="form-group">
+        <label for="tostation">To Station</label>
+        <input formControlName="tostation" type="text" class="form-control" autocomplete="off"
+               id="tostation" placeholder="To Station..." autofocus />
+      </div>
+      <div *ngIf="toshow">
+        <ul>
+          <li *ngFor="let result of toSearched" (click)="onToSelect(result)">
+            <p class="artist-name">
+              {{result.stationName}}
+            </p>
+        </ul>
+      </div>
+
+
+ <button class="btn btn-primary" type="submit">Find Trains</button>
+</form>
+</div>
+<div *ngIf="found">
+  <table class="table table-dark table-hover">
+    <thead>
+      <tr>
+        <th>Train Name</th>
+        <th>Seats Available</th>
+        <th>Book</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!--<ul>
+        <li *ngFor="let result of Trai">
+          <div class="artist-name">
+            <span>{{result.name}}</span>
+            <span>{{result.seat}}</span>
+          </div>
+          <div class="artist-name">
+        {{result.seat}}
+      </div>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      </li>
+      </ul>-->
+      <tr *ngFor="let result of Trai">
+        <td>{{result.name}}</td>
+        <td>{{result.seat}}</td>
+        <td><input type="number" /></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-primary" (click)="refresh()">Search Again</button>
+
+</div>

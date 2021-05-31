@@ -1,0 +1,21 @@
+﻿[
+  {
+    "Name": "Statabadi",
+    "routeid": "1",
+    "Seat": 70
+
+  },
+  {
+    "Name": "Saptkranti",
+    "routeid": "2",
+    "Seat": 90
+
+  },
+  {
+    "Name": "Duranto",
+    "routeid": "3",
+    "Seat": 10
+
+  }
+
+]

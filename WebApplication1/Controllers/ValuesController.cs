@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using WebApplication1.Model;
 
 namespace WebApplication1.Controllers
 {
@@ -11,9 +14,13 @@ namespace WebApplication1.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var webClient = new WebClient();
+            //var stationList = new List<Station>();
+            var jsonObj = webClient.DownloadString(@"C:\Users\apanwar\Documents\IRCTC\WebApplication1\Data\FromStation.json");
+            var Stations = JsonConvert.DeserializeObject<List<Station>>(jsonObj);
+            return Json(Stations);
         }
 
         // GET api/values/5
@@ -23,10 +30,31 @@ namespace WebApplication1.Controllers
             return "value";
         }
 
-        // POST api/values
+        // POST api/values/5/6
         [HttpPost]
-        public void Post([FromBody]string value)
+        public JsonResult Post([FromBody] MyJourney model)
         {
+            var webClient = new WebClient();
+            var availableTrain = new List<Train>();
+            //var stationList = new List<Station>();
+            var jsonObj = webClient.DownloadString(@"C:\Users\apanwar\Documents\IRCTC\WebApplication1\Data\Routes.json");
+            var Route = JsonConvert.DeserializeObject<List<Routes>>(jsonObj);
+            var trainObj = webClient.DownloadString(@"C:\Users\apanwar\Documents\IRCTC\WebApplication1\Data\trains.json");
+            var trains = JsonConvert.DeserializeObject<List<Train>>(trainObj);
+            foreach (Routes val in Route)
+            {
+                if(val.Station.Contains(model.fromstation) && val.Station.Contains(model.tostation))
+                {
+                    foreach(Train train in trains)
+                    {
+                        if (train.routeid == val.routeid)
+                        {
+                            availableTrain.Add(train);
+                        }
+                    }
+                }
+            }
+            return Json(availableTrain);
         }
 
         // PUT api/values/5
