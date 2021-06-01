@@ -66,11 +66,11 @@
       </tr>
       </li>
       </ul>-->
-      <tr *ngFor="let result of Trai">
-        <td>{{result.name}}</td>
+      <tr *ngFor="let result of Trai" >
+        <td id="train" #train>{{result.name}}</td>
         <td>{{result.seat}}</td>
-        <td><input type="number" min="1" value="1" max="{{result.seat}}" /></td>
-        <td><button class="btn btn-primary" >Book Seats</button></td>
+        <td><input type="number" min="1" value="1" max="{{result.seat}}" id="name" #name/></td>
+        <td><a class="btn btn-primary" [routerLink]="['/booked/'+result.name, { foo: name.value}]">Book Seats</a></td>
       </tr>
     </tbody>
   </table>
