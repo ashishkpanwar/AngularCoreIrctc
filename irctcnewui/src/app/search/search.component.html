@@ -1,39 +1,43 @@
 <div [hidden]="found">
-  <form  [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
     <div class="form-group">
       <div>
+        <div *ngIf="Trai.length==0 && searchstarted" class="text-danger">No Train Found</div>
         <label for="keyword">From Station</label>
         <input formControlName="fromstation" type="text" class="form-control" autocomplete="off"
                id="keyword" placeholder="From Station..." autofocus />
         <div *ngIf="fromsearched.length==0 && show" class="text-danger">Station Not Found</div>
-        </div>
       </div>
-      <div *ngIf="show">
-        <ul>
-          <li *ngFor="let result of fromsearched" (click)="onSelect(result)" id="fromlist">
-            <p class="artist-name">
-              {{result.stationName}}
-            </p>
-            <!--<span class="tags" *ngFor='let genre of result?.genres | slice:0:6'>{{genre}}</span>-->
-        </ul>
-      </div>
-      <div class="form-group">
-        <label for="tostation">To Station</label>
-        <input formControlName="tostation" type="text" class="form-control" autocomplete="off"
-               id="tostation" placeholder="To Station..." autofocus />
-      </div>
-      <div *ngIf="toshow">
-        <ul>
-          <li *ngFor="let result of toSearched" (click)="onToSelect(result)">
-            <p class="artist-name">
-              {{result.stationName}}
-            </p>
-        </ul>
-      </div>
+    </div>
+    <div class="text-info" *ngIf="show">Select From below stations only</div>
+    <div *ngIf="show">
+      <ul>
+        <li *ngFor="let result of fromsearched" (click)="onSelect(result)" id="fromlist">
+          <p class="artist-name">
+            {{result.stationName}}
+          </p>
+          <!--<span class="tags" *ngFor='let genre of result?.genres | slice:0:6'>{{genre}}</span>-->
+      </ul>
+    </div>
+    <div class="form-group">
+      <label for="tostation">To Station</label>
+      <input formControlName="tostation" type="text" class="form-control" autocomplete="off"
+             id="tostation" placeholder="To Station..." autofocus />
+      <div *ngIf="toSearched.length==0 && toshow" class="text-danger">Station Not Found</div>
+    </div>
+    <div class="text-info"*ngIf="toshow">Select From below stations only</div>
+    <div *ngIf="toshow">
+      <ul>
+        <li *ngFor="let result of toSearched" (click)="onToSelect(result)">
+          <p class="artist-name">
+            {{result.stationName}}
+          </p>
+      </ul>
+    </div>
 
 
- <button class="btn btn-primary" type="submit">Find Trains</button>
-</form>
+    <button class="btn btn-primary" type="submit">Find Trains</button>
+  </form>
 </div>
 <div *ngIf="found">
   <table class="table table-dark table-hover">
@@ -41,6 +45,7 @@
       <tr>
         <th>Train Name</th>
         <th>Seats Available</th>
+        <th>Number of Seats</th>
         <th>Book Seats</th>
       </tr>
     </thead>
@@ -64,7 +69,8 @@
       <tr *ngFor="let result of Trai">
         <td>{{result.name}}</td>
         <td>{{result.seat}}</td>
-        <td><input type="number" min="1" value="1" max="{{result.seat}}"/></td>
+        <td><input type="number" min="1" value="1" max="{{result.seat}}" /></td>
+        <td><button class="btn btn-primary" >Book Seats</button></td>
       </tr>
     </tbody>
   </table>

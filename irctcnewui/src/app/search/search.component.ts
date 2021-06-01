@@ -23,7 +23,9 @@ export class SearchComponent implements OnInit {
   toshow:boolean=false
   keyword: FormControl = new FormControl();
   formGroup;
-  found:boolean=false
+  found: boolean = false
+  searchstarted: boolean = false
+
 
 
   constructor(
@@ -47,6 +49,7 @@ export class SearchComponent implements OnInit {
   onSubmit(formData) {
     formData['fromstation'] = $("#keyword").val()
     formData['tostation'] = $("#tostation").val()
+    this.searchstarted = true;
     var name = formData['keyword'];
     console.log(formData);
 
@@ -64,6 +67,7 @@ export class SearchComponent implements OnInit {
     console.log(station.stationName);
     $("#keyword").val(station.stationName);
     this.fromsearched = [];
+    this.show = false;
 
 
   }
@@ -71,17 +75,11 @@ export class SearchComponent implements OnInit {
     console.log(station.stationName);
     $("#tostation").val(station.stationName);
     this.toSearched = [];
-
+    this.toshow = false;
 
   }
   search(): void {
-    //$("#keyword").mouseleave(function () {
-    //  this.fromsearched = [];
-    //  console.log('left')
-    //});
-    //$("#keyword").blur(function () {
-    //  console.log('blur')
-    //  this.fromsearched = [];
+
     this.rest.getProducts().subscribe((resp: any) => {
       this.products = resp;
     })
@@ -89,6 +87,7 @@ export class SearchComponent implements OnInit {
     $("#keyword").
       keyup
       ((x) => {
+        this.searchstarted = false;
         this.fromsearched = [];
        // this.rest.getProducts().subscribe((resp: any) => {
           //console.log(resp[0].id);
@@ -106,9 +105,8 @@ export class SearchComponent implements OnInit {
     $("#tostation").
       keyup
       ((x) => {
-
         this.toSearched = [];
-        
+        this.searchstarted = false;
           // console.log(this.products[0]);
           // console.log(x);
           this.products.forEach((y) => {
