@@ -41,7 +41,7 @@
       <tr>
         <th>Train Name</th>
         <th>Seats Available</th>
-        <th>Book</th>
+        <th>Book Seats</th>
       </tr>
     </thead>
     <tbody>
@@ -64,7 +64,7 @@
       <tr *ngFor="let result of Trai">
         <td>{{result.name}}</td>
         <td>{{result.seat}}</td>
-        <td><input type="number" /></td>
+        <td><input type="number" min="1" value="1" max="{{result.seat}}"/></td>
       </tr>
     </tbody>
   </table>
